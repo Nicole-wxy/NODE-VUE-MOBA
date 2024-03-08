@@ -2,22 +2,31 @@
   <div>
     <swiper :options="swiperOption" ref="mySwiper">
       <!-- slides -->
-      <swiper-slide>
-        <img class="w-100" src="../assets/images/8daa3e2de015c88c3c8ea34e75a163e2.jpeg" alt />
-      </swiper-slide>
-      <swiper-slide>
-        <img class="w-100" src="../assets/images/5bd399890e0ddca258ada7793cacb747.jpeg" alt />
-      </swiper-slide>
-      <swiper-slide>
-        <img class="w-100" src="../assets/images/d143b71ec124a6b4fb62d60d2ff30a52.jpeg" alt />
-      </swiper-slide>
-      <div class="swiper-pagination pagination-home text-right" slot="pagination"></div>
+      <swiper-slide v-for="(item, i) in categories" :key="i">
+        <a
+          :href="item.url"
+        >
+          <img
+            class="w-100"
+            :src="item.image"
+            alt
+        /></a>
+        </swiper-slide>
+      <div
+        class="swiper-pagination pagination-home text-right"
+        slot="pagination"
+      ></div>
     </swiper>
   </div>
 </template>
 <script>
 export default {
   name: "swiperNav",
+  props: {
+    categories: {
+      type: Array,
+    },
+  },
   data() {
     return {
       swiperOption: {
@@ -25,17 +34,17 @@ export default {
         autoplay: {
           delay: 2000,
           stopOnLastSlide: false /* 触摸滑动后是否继续轮播 */,
-          disableOnInteraction: false
+          disableOnInteraction: false,
         },
         pagination: {
-          el: ".pagination-home"
-        }
+          el: ".pagination-home",
+        },
       },
-      swiperSlides: [1, 2, 3]
+      swiperSlides: [1, 2, 3],
     };
   },
   methods: {},
-  computed: {}
+  computed: {},
 };
 </script>
 <style lang="scss">

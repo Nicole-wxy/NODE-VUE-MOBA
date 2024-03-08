@@ -9,6 +9,9 @@ module.exports = app => {
     const express = require('express')
     const router = express.Router()
 
+    const dotenv = require('dotenv')
+    dotenv.config({path:'.env'})
+
     //创建资源
     router.post('/', async (req, res) => {
         const model = await req.Model.create(req.body)
@@ -60,10 +63,10 @@ module.exports = app => {
         // dest: __dirname + '../../../uploads' 
         storage: MAO({
             config: {
-                region: 'oss-cn-hongkong',
-                accessKeyId: 'LTAI4FeBSxWiVhAQs2jc486T',
-                accessKeySecret: 'k6g1Nb8lBXc0gkXq74VkEN438ttcNk',
-                bucket: 'nodema'
+                region: process.env.OSS_REGION,
+                accessKeyId: process.env.OSS_ACCESS_KEY_ID,
+                accessKeySecret: process.env.OSS_ACCESS_KEY_SECRET,
+                bucket: process.env.OSS_BUCKET,
             }
         })
     })

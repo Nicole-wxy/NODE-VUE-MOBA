@@ -1,6 +1,6 @@
 <template>
   <div>
-    <swiperNav></swiperNav>
+    <swiperNav :categories="adsCats"></swiperNav>
     <div class="menu">
       <navMenu></navMenu>
     </div>
@@ -32,7 +32,7 @@
         />
         <!-- 在父组件中直接拿到子组件中某个循环体的变量 -->
         <template #items="{category}">
-          <div class="d-flex flex-wrap mx-1">
+          <div class="d-flex flex-wrap mx-2">
             <router-link
               :to="`/heroes/${item._id}`"
               tag="div"
@@ -112,6 +112,7 @@ export default {
   name: "index",
   data() {
     return {
+      adsCats: [],
       newsCats: [],
       heroCats: [],
       videoCats: [
@@ -399,6 +400,7 @@ export default {
     };
   },
   created() {
+    this.fetchAdsCats();
     this.fetchNewsCats();
     this.fetchHeroCats();
   },
@@ -408,6 +410,10 @@ export default {
     }
   },
   methods: {
+    async fetchAdsCats() {
+      const res = await this.$http.get("ads/list");
+      this.adsCats = res.data[0].items;
+    },
     async fetchNewsCats() {
       const res = await this.$http.get("news/list");
       this.newsCats = res.data;
@@ -415,7 +421,6 @@ export default {
     async fetchHeroCats() {
       const res = await this.$http.get("heroes/list");
       this.heroCats = res.data;
-      console.log(this.heroCats);
     }
   },
   components: {
